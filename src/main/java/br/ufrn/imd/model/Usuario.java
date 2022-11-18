@@ -8,27 +8,29 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import br.ufrn.imd.repository.UsuarioRepository;
+
 @Entity
 public class Usuario {
 
 	@Id
 	@GeneratedValue
-	private Long id;
-	private int username;
-	private String senha;
-	private String tipo;
+	protected Long id;
+	protected String username;
+	protected String senha;
+	protected String tipo;
 	
 	@OneToMany
 	protected List<Tarefa> tarefas;
 	
 	@ManyToMany
-	private List<Projeto> projetos;
+	protected List<Projeto> projetos;
 	
 	public Usuario() {
 		super();
 	}
 	
-	public Usuario(Long id, int username, String senha, String tipo) {
+	public Usuario(Long id, String username, String senha, String tipo) {
 		super();
 		this.username = username;
 		this.senha = senha;
@@ -41,10 +43,10 @@ public class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getUsername() {
+	public String getUsername() {
 		return username;
 	}
-	public void setUsername(int username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 	public String getSenha() {
@@ -62,6 +64,7 @@ public class Usuario {
 	public List<Projeto> getProjetos() {
 		return projetos;
 	}
-	
-	
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	};	
 }

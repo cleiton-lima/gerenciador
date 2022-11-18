@@ -4,7 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.ufrn.imd.model.Usuario;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-	public String relatorio();
-	public Integer getPontos();
-}
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {}

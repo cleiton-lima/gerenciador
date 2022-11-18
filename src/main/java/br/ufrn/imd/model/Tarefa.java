@@ -22,7 +22,7 @@ public class Tarefa {
 	private Usuario responsavel;
 	
 	@ManyToOne
-	private Qa relator;
+	private Usuario relator;
 	
 	@OneToMany
 	private List<Comentario> comentarios;
@@ -51,7 +51,7 @@ public class Tarefa {
 	public void setResponsavel(Usuario responsavel) {
 		this.responsavel = responsavel;
 	}
-	public Qa getRelator() {
+	public Usuario getRelator() {
 		return relator;
 	}
 	public void setRelator(Qa relator) {

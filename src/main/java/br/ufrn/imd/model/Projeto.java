@@ -12,7 +12,7 @@ public class Projeto {
 
 	@Id
 	@GeneratedValue
-	private Long id;
+	private long id;
 	private String nome;
 	
 	@OneToMany
@@ -21,10 +21,10 @@ public class Projeto {
 	@ManyToMany
 	private List<Usuario> usuarios;
 	
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getNome() {
