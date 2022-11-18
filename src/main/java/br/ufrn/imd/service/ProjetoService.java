@@ -26,5 +26,11 @@ public class ProjetoService {
 		return repository.save(proj);
 	}
 
+	public void deletar(Projeto proj) {
+		repository.delete(proj);
+	}
 
+	public Projeto buscarPorId(Long id) {
+		return repository.findById(id).get();
+	}
 }

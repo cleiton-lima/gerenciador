@@ -26,4 +26,8 @@ public class ComentarioService {
 		return repository.save(comment);
 	}
 	
+	public void deletar(Comentario comment) {
+		repository.delete(comment);
+	}
+	
 }
