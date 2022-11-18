@@ -26,5 +26,8 @@ public class ProjetoService {
 		return repository.save(proj);
 	}
 
-
+	public void deletar(Projeto proj) {
+		repository.delete(proj);
+	}
+	
 }
