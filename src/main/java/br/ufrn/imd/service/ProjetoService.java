@@ -29,5 +29,8 @@ public class ProjetoService {
 	public void deletar(Projeto proj) {
 		repository.delete(proj);
 	}
-	
+
+	public Projeto buscarPorId(Long id) {
+		return repository.findById(id).get();
+	}
 }
