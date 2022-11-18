@@ -34,9 +34,13 @@ public class Comentario {
 	public Tarefa getTarefa() {
 		return tarefa;
 	}
+	public void setTarefa(Tarefa tarefa) {
+		this.tarefa = tarefa;
+	}
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
+	}
 	public Usuario getAutor() {
 		return autor;
-	}
-	
-	
+	}	
 }

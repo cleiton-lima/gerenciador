@@ -11,12 +11,12 @@ import javax.persistence.OneToMany;
 import br.ufrn.imd.repository.UsuarioRepository;
 
 @Entity
-public abstract class Usuario {
+public class Usuario {
 
 	@Id
 	@GeneratedValue
 	protected Long id;
-	protected int username;
+	protected String username;
 	protected String senha;
 	protected String tipo;
 	
@@ -30,7 +30,7 @@ public abstract class Usuario {
 		super();
 	}
 	
-	public Usuario(Long id, int username, String senha, String tipo) {
+	public Usuario(Long id, String username, String senha, String tipo) {
 		super();
 		this.username = username;
 		this.senha = senha;
@@ -43,10 +43,10 @@ public abstract class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getUsername() {
+	public String getUsername() {
 		return username;
 	}
-	public void setUsername(int username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 	public String getSenha() {
@@ -66,8 +66,5 @@ public abstract class Usuario {
 	}
 	public List<Tarefa> getTarefas() {
 		return tarefas;
-	};
-	public abstract String relatorio();
-	public abstract Integer getPontos();
-	
+	};	
 }
