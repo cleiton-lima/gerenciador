@@ -8,21 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import br.ufrn.imd.repository.UsuarioRepository;
+
 @Entity
-public class Usuario {
+public abstract class Usuario {
 
 	@Id
 	@GeneratedValue
-	private Long id;
-	private int username;
-	private String senha;
-	private String tipo;
+	protected Long id;
+	protected int username;
+	protected String senha;
+	protected String tipo;
 	
 	@OneToMany
 	protected List<Tarefa> tarefas;
 	
 	@ManyToMany
-	private List<Projeto> projetos;
+	protected List<Projeto> projetos;
 	
 	public Usuario() {
 		super();
@@ -62,6 +64,10 @@ public class Usuario {
 	public List<Projeto> getProjetos() {
 		return projetos;
 	}
-	
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	};
+	public abstract String relatorio();
+	public abstract Integer getPontos();
 	
 }

@@ -1,8 +1,7 @@
 package br.ufrn.imd.controller;
 
 import java.util.List;
-import br.ufrn.imd.model.Usuario;
-import br.ufrn.imd.repository.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,20 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/usuarios")
-public class UsuarioController {
-    
-    @Autowired
-    UsuarioRepository usuarioRespository;
+import br.ufrn.imd.model.Comentario;
+import br.ufrn.imd.repository.ComentarioRepository;
 
-    @PostMapping
-    public Usuario create(@RequestBody Usuario usuario) {
-            return usuarioRespository.save(usuario);
+@RestController
+@RequestMapping("/comentarios")
+public class ComentarioController {
+	
+	@Autowired
+	ComentarioRepository comentarioRespository;
+	
+	@PostMapping
+    public Comentario create(@RequestBody Comentario comentario) {
+            return comentarioRespository.save(comentario);
     }
 
     @GetMapping
-    public List<Usuario> index() {
-            return usuarioRespository.findAll();
+    public List<Comentario> index() {
+            return comentarioRespository.findAll();
     }
 }

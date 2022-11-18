@@ -6,13 +6,15 @@ import javax.persistence.Entity;
 import br.ufrn.imd.repository.TarefaRepository;
 import br.ufrn.imd.repository.UsuarioRepository;
 
-public class Qa extends Usuario implements UsuarioRepository, TarefaRepository {
+@Entity
+public class Qa extends Usuario {
+
+	@Override
 	public List<Tarefa> getTarefas() {
 		return tarefas;
 	}
 	public Integer getPontos() {
 		return 0;
-		
 	};
 	public String relatorio() {
 		return "";
