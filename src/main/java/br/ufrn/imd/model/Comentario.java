@@ -1,19 +1,41 @@
 package br.ufrn.imd.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Comentario {
-	private String titulo;
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String descricao;
-	public String getTitulo() {
-		return titulo;
+	
+	@ManyToOne
+	private Usuario autor;
+	
+	@ManyToOne
+	private Tarefa tarefa;
+
+	public Long getId() {
+		return id;
 	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getDescricao() {
 		return descricao;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public Tarefa getTarefa() {
+		return tarefa;
+	}
+	public Usuario getAutor() {
+		return autor;
 	}
 	
 	

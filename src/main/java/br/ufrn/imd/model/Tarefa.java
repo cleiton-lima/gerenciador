@@ -2,15 +2,37 @@ package br.ufrn.imd.model;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Tarefa {
 
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String titulo;
 	private String descricao;
-	private Usuario responsavel;
-	private Qa relator;
 	private Date data;
+
+	@ManyToOne
+	private Usuario responsavel;
 	
+	@ManyToOne
+	private Qa relator;
+	
+	@OneToMany
+	private List<Comentario> comentarios;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTitulo() {
 		return titulo;
 	}

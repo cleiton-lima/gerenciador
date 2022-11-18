@@ -1,23 +1,46 @@
 package br.ufrn.imd.model;
 
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Usuario {
 
+	@Id
+	@GeneratedValue
+	private Long id;
 	private int username;
 	private String senha;
 	private String tipo;
+	
+	@OneToMany
+	protected List<Tarefa> tarefas;
+	
+	@ManyToMany
+	private List<Projeto> projetos;
 	
 	public Usuario() {
 		super();
 	}
 	
-	public Usuario(int username, String senha, String tipo) {
+	public Usuario(Long id, int username, String senha, String tipo) {
 		super();
 		this.username = username;
 		this.senha = senha;
 		this.tipo = tipo;
 	}
 
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public int getUsername() {
 		return username;
 	}
@@ -35,6 +58,9 @@ public class Usuario {
 	}
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	public List<Projeto> getProjetos() {
+		return projetos;
 	}
 	
 	
