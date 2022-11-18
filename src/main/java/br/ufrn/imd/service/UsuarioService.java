@@ -14,11 +14,24 @@ public class UsuarioService {
 	UsuarioRepository repository;
 	
 	public Usuario salvar(Usuario user) {
-		System.out.println("Executando regra de negócio complicadas");
 		return repository.save(user);
 	}
 	
 	public List<Usuario> listar() {
 		return repository.findAll();
 	}
+
+	public Usuario atualizar(Usuario user) {
+		return repository.save(user);
+	}
+
+	public Usuario buscarPorId(Long id) {
+		return repository.findById(id).get();
+	}
+
+	public void deletar(Long id) {
+		repository.deleteById(id);
+	}
+
+	
 }

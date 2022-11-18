@@ -3,11 +3,10 @@ package br.ufrn.imd.model;
 import java.util.List;
 import javax.persistence.Entity;
 
-import br.ufrn.imd.repository.TarefaInterface;
-import br.ufrn.imd.repository.UsuarioInterface;
+import br.ufrn.imd.repository.TarefaRepository;
+import br.ufrn.imd.repository.UsuarioRepository;
 
-@Entity
-public class Qa extends Usuario implements UsuarioInterface, TarefaInterface {
+public class Qa extends Usuario implements UsuarioRepository, TarefaRepository {
 	public List<Tarefa> getTarefas() {
 		return tarefas;
 	}
