@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufrn.imd.model.Comentario;
+import br.ufrn.imd.model.Projeto;
 import br.ufrn.imd.model.Tarefa;
+import br.ufrn.imd.repository.ComentarioRepository;
 import br.ufrn.imd.repository.TarefaRepository;
 
 @RestController
@@ -24,6 +28,8 @@ public class TarefaController {
 	
 	@Autowired
 	TarefaRepository tarefaRepository;
+	@Autowired
+	ComentarioRepository comentarioRepository;
 
 	@RequestMapping(value = "/tarefas", method = RequestMethod.GET)
     public List<Tarefa> Get() {
@@ -43,6 +49,26 @@ public class TarefaController {
 	@RequestMapping(value = "/tarefas", method =  RequestMethod.POST)
     public Tarefa create(@RequestBody Tarefa tarefa) {
             return tarefaRepository.save(tarefa);
+    }
+	
+	@RequestMapping(value = "/tarefas/{id}/comentarios", method = RequestMethod.GET)
+    public List<Comentario> GetComentariosByTarefa(@PathVariable(value = "id") long id) {
+		Optional<Tarefa> tarefa = tarefaRepository.findById(id);
+        if(tarefa.isPresent()){
+        	return tarefa.get().getComentarios();
+        }
+        else
+        	return new ArrayList<Comentario>();
+    }
+	
+	@PostMapping("/tarefas/{id}/comentarios")
+    public ResponseEntity<Comentario> createComentariosOnTarefa(@PathVariable(value = "id") long id, @RequestBody Comentario newComentario) {        
+		Comentario comentario = tarefaRepository.findById(id).map(tarefa -> {
+        	newComentario.setTarefa(tarefa);
+  	      return comentarioRepository.save(newComentario);
+  	    }).orElseThrow();
+
+  	    return new ResponseEntity<>(newComentario, HttpStatus.CREATED);
     }
 	
 	@RequestMapping(value = "/tarefas/{id}", method =  RequestMethod.PUT)

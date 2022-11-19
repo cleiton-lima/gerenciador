@@ -1,9 +1,12 @@
 package br.ufrn.imd.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Comentario {
@@ -13,11 +16,13 @@ public class Comentario {
 	private Long id;
 	private String descricao;
 	
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Tarefa tarefa;
+	
+
 	@ManyToOne
 	private Usuario autor;
-	
-	@ManyToOne
-	private Tarefa tarefa;
 
 	public Long getId() {
 		return id;
@@ -42,5 +47,12 @@ public class Comentario {
 	}
 	public Usuario getAutor() {
 		return autor;
+	}
+	public Comentario() {}
+	
+	public Comentario(String descricao, Usuario autor, Tarefa tarefa) {
+		this.descricao = descricao;
+		this.autor = autor;
+		this.tarefa = tarefa;
 	}	
 }
