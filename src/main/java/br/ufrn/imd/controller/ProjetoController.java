@@ -1,5 +1,6 @@
 package br.ufrn.imd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,23 +18,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufrn.imd.model.Projeto;
+import br.ufrn.imd.model.Tarefa;
 import br.ufrn.imd.repository.ProjetoRepository;
+import br.ufrn.imd.repository.TarefaRepository;
+import br.ufrn.imd.service.TarefaService;
+import br.ufrn.imd.service.ProjetoService;
 
 @RestController
 public class ProjetoController {
 	
 	@Autowired
-	ProjetoRepository projetoRespository;
+	ProjetoRepository projetoRepository;
+	@Autowired
+	TarefaRepository tarefaRepository;
 
 	@RequestMapping(value = "/projetos", method = RequestMethod.GET)
     public List<Projeto> Get() {
-            return projetoRespository.findAll();
+            return projetoRepository.findAll();
     }
 	
 	@RequestMapping(value = "/projetos/{id}", method = RequestMethod.GET)
     public ResponseEntity<Projeto> GetById(@PathVariable(value = "id") long id)
     {
-        Optional<Projeto> projeto = projetoRespository.findById(id);
+        Optional<Projeto> projeto = projetoRepository.findById(id);
         if(projeto.isPresent())
             return new ResponseEntity<Projeto>(projeto.get(), HttpStatus.OK);
         else
@@ -42,17 +49,37 @@ public class ProjetoController {
 	
 	@RequestMapping(value = "/projetos", method =  RequestMethod.POST)
     public Projeto create(@RequestBody Projeto projeto) {
-            return projetoRespository.save(projeto);
+            return projetoRepository.save(projeto);
+    }
+	
+	@RequestMapping(value = "/projetos/{id}/tarefas", method = RequestMethod.GET)
+    public List<Tarefa> GetTarefasByProject(@PathVariable(value = "id") long id) {
+		Optional<Projeto> projeto = projetoRepository.findById(id);
+        if(projeto.isPresent()){
+        	return projeto.get().getTarefas();
+        }
+        else
+            return new ArrayList<Tarefa>();
+    }
+	
+	@PostMapping("/projetos/{id}/tarefas")
+    public ResponseEntity<Tarefa> createTarefasOnProject(@PathVariable(value = "id") long id, @RequestBody Tarefa newTarefa) {        
+        Tarefa tarefa = projetoRepository.findById(id).map(projeto -> {
+        	newTarefa.setProjeto(projeto);
+  	      return tarefaRepository.save(newTarefa);
+  	    }).orElseThrow();
+
+  	    return new ResponseEntity<>(newTarefa, HttpStatus.CREATED);
     }
 	
 	@RequestMapping(value = "/projetos/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Projeto> Put(@PathVariable(value = "id") long id, @Valid @RequestBody Projeto newProjeto)
     {
-        Optional<Projeto> oldProjeto = projetoRespository.findById(id);
+        Optional<Projeto> oldProjeto = projetoRepository.findById(id);
         if(oldProjeto.isPresent()){
         	Projeto projeto = oldProjeto.get();
             projeto.setNome(newProjeto.getNome());
-            projetoRespository.save(projeto);
+            projetoRepository.save(projeto);
             return new ResponseEntity<Projeto>(projeto, HttpStatus.OK);
         }
         else
@@ -62,9 +89,9 @@ public class ProjetoController {
     @RequestMapping(value = "/projetos/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id)
     {
-        Optional<Projeto> projeto = projetoRespository.findById(id);
+        Optional<Projeto> projeto = projetoRepository.findById(id);
         if(projeto.isPresent()){
-        	projetoRespository.delete(projeto.get());
+        	projetoRepository.delete(projeto.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else

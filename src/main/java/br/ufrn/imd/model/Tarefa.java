@@ -1,12 +1,19 @@
 package br.ufrn.imd.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Tarefa {
@@ -24,8 +31,12 @@ public class Tarefa {
 	@ManyToOne
 	private Usuario relator;
 	
-	@OneToMany
-	private List<Comentario> comentarios;
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Projeto projeto;
+	
+	@OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -63,9 +74,27 @@ public class Tarefa {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	public List<Comentario> getComentarios() {
-		return null;
+	public Projeto getProjeto() {
+		return projeto;
 	}
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
+	}
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+	public Tarefa() {};
 	
-	
+	public Tarefa(Long id, String titulo, String descricao, Date data, Usuario responsavel, Usuario relator,
+			Projeto projeto, List<Comentario> comentarios) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.data = data;
+		this.responsavel = responsavel;
+		this.relator = relator;
+		this.projeto = projeto;
+		this.comentarios = comentarios;
+	}
 }

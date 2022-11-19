@@ -1,6 +1,9 @@
 package br.ufrn.imd.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,11 +18,11 @@ public class Projeto {
 	private long id;
 	private String nome;
 	
-	@OneToMany
-	protected List<Tarefa> tarefas;
+	@OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
+	protected List<Tarefa> tarefas = new ArrayList<>();
 	
 	@ManyToMany
-	private List<Usuario> usuarios;
+	private List<Usuario> usuarios = new ArrayList<>();
 	
 	public long getId() {
 		return id;
@@ -45,4 +48,15 @@ public class Projeto {
 	public void adicionarUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
 	}
+	public void adicionarTarefa(Tarefa tarefa) {
+		this.tarefas.add(tarefa);
+	}
+	public Projeto() {}
+	
+	public Projeto(String nome, List<Tarefa> tarefas, List<Usuario> usuarios) {
+		this.nome = nome;
+		this.tarefas = tarefas;
+		this.usuarios = usuarios;
+	}
+
 }
