@@ -83,6 +83,8 @@ public class TarefaController {
             tarefa.setDescricao(newTarefa.getDescricao());
             tarefa.setData(newTarefa.getData());
             tarefa.setResponsavel(newTarefa.getResponsavel());
+            tarefa.setPrioridade(newTarefa.getPrioridade());
+            tarefa.setStatus(newTarefa.getStatus());
             tarefaRepository.save(tarefa);
             return new ResponseEntity<Tarefa>(tarefa, HttpStatus.OK);
         }
