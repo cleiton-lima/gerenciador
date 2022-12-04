@@ -81,6 +81,7 @@ public class ProjetoController {
         if(oldProjeto.isPresent()){
         	Projeto projeto = oldProjeto.get();
             projeto.setNome(newProjeto.getNome());
+            projeto.setDescricao(newProjeto.getDescricao());
             projetoRepository.save(projeto);
             return new ResponseEntity<Projeto>(projeto, HttpStatus.OK);
         }
