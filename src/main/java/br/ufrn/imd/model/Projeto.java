@@ -17,6 +17,7 @@ public class Projeto {
 	@GeneratedValue
 	private long id;
 	private String nome;
+	private String descricao;
 	
 	@OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
 	protected List<Tarefa> tarefas = new ArrayList<>();
@@ -51,10 +52,21 @@ public class Projeto {
 	public void adicionarTarefa(Tarefa tarefa) {
 		this.tarefas.add(tarefa);
 	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	public Projeto() {}
 	
-	public Projeto(String nome, List<Tarefa> tarefas, List<Usuario> usuarios) {
+	public Projeto(long id, String nome, String descricao, List<Tarefa> tarefas, List<Usuario> usuarios) {
+		super();
+		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
 		this.tarefas = tarefas;
 		this.usuarios = usuarios;
 	}

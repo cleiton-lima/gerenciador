@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -23,7 +24,10 @@ public class Tarefa {
 	private Long id;
 	private String titulo;
 	private String descricao;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	private Date data;
+	private String prioridade;
+	private String status;	
 
 	@ManyToOne
 	private Usuario responsavel;
@@ -85,16 +89,33 @@ public class Tarefa {
 	}
 	public Tarefa() {};
 	
-	public Tarefa(Long id, String titulo, String descricao, Date data, Usuario responsavel, Usuario relator,
-			Projeto projeto, List<Comentario> comentarios) {
+	public String getPrioridade() {
+		return prioridade;
+	}
+	
+	public void setPrioridade(String prioridade) {
+		this.prioridade = prioridade;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public Tarefa(Long id, String titulo, String descricao, Date data, String prioridade, String status,
+		Usuario responsavel, Usuario relator, Projeto projeto, List<Comentario> comentarios) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.data = data;
+		this.prioridade = prioridade;
+		this.status = status;
 		this.responsavel = responsavel;
 		this.relator = relator;
 		this.projeto = projeto;
 		this.comentarios = comentarios;
 	}
+	
 }

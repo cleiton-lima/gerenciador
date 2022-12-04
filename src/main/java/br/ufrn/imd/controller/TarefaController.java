@@ -88,6 +88,20 @@ public class TarefaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @RequestMapping(value = "/tarefas/{id}/status", method =  RequestMethod.PUT)
+    public ResponseEntity<Tarefa> PutStatus(@PathVariable(value = "id") long id, @Valid @RequestBody Tarefa newTarefa)
+    {
+        Optional<Tarefa> oldTarefa = tarefaRepository.findById(id);
+        if(oldTarefa.isPresent()){
+        	Tarefa tarefa = oldTarefa.get();
+            tarefa.setStatus(newTarefa.getStatus());
+            tarefaRepository.save(tarefa);
+            return new ResponseEntity<Tarefa>(tarefa, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(value = "/tarefas/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id)
     {
